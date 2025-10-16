@@ -240,7 +240,6 @@ streamlit hello
 - **GitHub Repository**: https://github.com/IrakizaGaius/FinancialChatbot
 - **Kaggle Notebook**: https://www.kaggle.com/code/gaiusirakiza/financial-dataset-transfer-learning
 - **Model Repository**: https://huggingface.co/GaiusIrakiza/financegpt-t5-model
-- **Technical Report**: Comprehensive academic report on the project methodology
 - **Training Notebook**: `Financial_Dataset_Preprocessing.ipynb` - Data preprocessing pipeline
 - **Model Training**: `T5_base.py` - Fine-tuning script with hyperparameters
 
