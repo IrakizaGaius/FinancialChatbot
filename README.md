@@ -5,7 +5,6 @@ An intelligent conversational AI system fine-tuned on financial domain knowledge
 ![Python](https://img.shields.io/badge/python-3.8+-blue.svg)
 ![TensorFlow](https://img.shields.io/badge/TensorFlow-2.x-orange.svg)
 ![Streamlit](https://img.shields.io/badge/Streamlit-1.20+-red.svg)
-![License](https://img.shields.io/badge/license-MIT-green.svg)
 
 ## 🎯 Overview
 
@@ -35,8 +34,8 @@ Before running the application, ensure you have:
 ### 1. Clone the Repository
 
 ```bash
-git clone <repository-url>
-cd Chatbot
+git clone https://github.com/IrakizaGaius/FinancialChatbot.git
+cd FinancialChatbot
 ```
 
 ### 2. Create Virtual Environment
@@ -61,6 +60,7 @@ pip install -r requirements.txt
 ```
 
 **Required packages:**
+
 ```txt
 streamlit>=1.20.0
 tensorflow>=2.10.0
@@ -70,9 +70,10 @@ pandas>=1.5.0
 
 ### 4. Download the Model
 
-**Option A: Pre-trained Model (Recommended)**
+**Pre-trained Model (Recommended)**
 
 Download the fine-tuned model from [model hosting location] and place it in:
+
 ```
 Chatbot/
 ├── T5_finetuned_model/
@@ -82,17 +83,6 @@ Chatbot/
 │   ├── tokenizer_config.json
 │   ├── tokenizer.json
 │   └── spiece.model
-```
-
-**Option B: Use Base Model**
-
-If you want to train from scratch:
-```bash
-# Install additional dependencies
-pip install datasets rouge-score
-
-# Run training script
-python T5_base.py
 ```
 
 ### 5. Run the Application
@@ -183,6 +173,7 @@ top_p = 0.95            # Nucleus sampling threshold
 **Error**: `Failed to load model`
 
 **Solution**:
+
 ```bash
 # Verify model directory exists
 ls T5_finetuned_model/
@@ -199,6 +190,7 @@ chmod -R 755 T5_finetuned_model/
 **Error**: `OOM (Out of Memory)`
 
 **Solution**:
+
 - Reduce `max_length` to 512 or 768
 - Close other applications
 - Use CPU instead of GPU (slower but uses system RAM)
@@ -207,6 +199,7 @@ chmod -R 755 T5_finetuned_model/
 ### Slow Response Times
 
 **Solution**:
+
 - Ensure GPU is being used (check with `nvidia-smi`)
 - Reduce `max_length` parameter
 - Use `num_beams=1` for sampling (already default)
@@ -217,6 +210,7 @@ chmod -R 755 T5_finetuned_model/
 **Error**: `Port 8501 is already in use`
 
 **Solution**:
+
 ```bash
 # Use different port
 streamlit run streamlit_app.py --server.port 8502
@@ -242,6 +236,8 @@ streamlit hello
 
 ## 📚 Additional Resources
 
+- **GitHub Repository**: https://github.com/IrakizaGaius/FinancialChatbot
+- **Kaggle Notebook**: https://www.kaggle.com/code/gaiusirakiza/financial-dataset-transfer-learning
 - **Technical Report**: Comprehensive academic report on the project methodology
 - **Training Notebook**: `Financial_Dataset_Preprocessing.ipynb` - Data preprocessing pipeline
 - **Model Training**: `T5_base.py` - Fine-tuning script with hyperparameters
@@ -261,30 +257,3 @@ Contributions are welcome! Areas for improvement:
 **Important**: FinanceGPT is designed for educational purposes and general financial information. It is NOT a substitute for professional financial advice. Always consult with qualified financial advisors, accountants, or legal professionals before making important financial decisions.
 
 The AI model may occasionally produce incorrect or incomplete information. Users should verify critical information through authoritative sources.
-
-## 📄 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 👨‍💻 Author
-
-**Irakiza Gaius**
-
-Built as part of an NLP research project demonstrating domain-specific fine-tuning of large language models for financial question answering.
-
-## 🙏 Acknowledgments
-
-- **Google Research**: T5 model architecture
-- **Hugging Face**: Transformers library and model hosting
-- **Investopedia**: Financial education content
-- **Kaggle Community**: Financial Q&A datasets
-- **Streamlit**: Web application framework
-
----
-
-**Version**: 1.0.0  
-**Last Updated**: October 2025  
-
-For questions, issues, or suggestions, please open an issue on the repository.
-
-**⭐ If you find this project helpful, please consider giving it a star!**
