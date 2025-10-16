@@ -616,7 +616,7 @@ def main():
     
     if not st.session_state.model_loaded:
         with st.spinner("🔄 Loading AI model... Please wait..."):
-            model_path = "T5_finetuned_model"
+            model_path = "GaiusIrakiza/financegpt-t5-model"
             model, tokenizer = load_model_and_tokenizer(model_path)
             if model and tokenizer:
                 st.session_state.model = model
