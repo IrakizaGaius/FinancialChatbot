@@ -8,6 +8,7 @@ streamlit==1.50.0
 # Deep Learning Framework
 tensorflow==2.16.2
 tensorflow-io-gcs-filesystem==0.37.1
+tf-keras==2.16.0
 
 # Transformers and NLP
 transformers==4.57.0
