@@ -44,6 +44,7 @@ env/
 
 # Model Files (Large)
 t5_base_local/
+t5_base_local.zip
 T5_finetuned_model/
 *.h5
 *.safetensors
@@ -51,6 +52,7 @@ T5_finetuned_model/
 *.ckpt
 *.pth
 *.pt
+*.zip
 
 # Dataset Files (Large)
 *.csv
