@@ -288,48 +288,54 @@ st.markdown("""
 def load_model_and_tokenizer(model_path):
     """Load T5 model and tokenizer with caching."""
     try:
+        # Configure GPU if available
         gpus = tf.config.list_physical_devices('GPU')
         if gpus:
             for gpu in gpus:
                 tf.config.experimental.set_memory_growth(gpu, True)
         
-        tokenizer = T5Tokenizer.from_pretrained(model_path, local_files_only=True)
+        # Load tokenizer (will download from HF Hub if needed)
+        st.info(f"Loading tokenizer from: {model_path}")
+        tokenizer = T5Tokenizer.from_pretrained(model_path)
         
+        # Try multiple loading strategies
+        st.info("Loading model... This may take a minute on first run.")
         try:
+            # Try TensorFlow format first
             model = TFT5ForConditionalGeneration.from_pretrained(
                 model_path,
-                local_files_only=True,
                 from_pt=False
             )
         except Exception as e1:
-            st.warning(f"Attempting alternative loading method...")
+            st.warning("TensorFlow format not found, trying PyTorch conversion...")
             try:
+                # Try converting from PyTorch
                 model = TFT5ForConditionalGeneration.from_pretrained(
                     model_path,
-                    local_files_only=True,
                     from_pt=True
                 )
             except Exception as e2:
-                try:
-                    model = TFT5ForConditionalGeneration.from_pretrained(
-                        model_path,
-                        local_files_only=True,
-                        use_safetensors=False
-                    )
-                except Exception as e3:
-                    raise Exception(f"Could not load model. Tried multiple methods:\n1. TF direct: {str(e1)}\n2. From PyTorch: {str(e2)}\n3. Without safetensors: {str(e3)}")
+                st.error(f"Failed to load model: {str(e2)}")
+                st.info("""
+                **Troubleshooting:**
+                - Model: `{}`
+                - Make sure the model repository exists and is public
+                - Check your internet connection for first-time download
+                """.format(model_path))
+                return None, None
         
+        st.success(f"✅ Model loaded successfully from {model_path}")
         return model, tokenizer
     
     except Exception as e:
-        st.error(f"Error loading model: {str(e)}")
+        st.error(f"❌ Error loading model: {str(e)}")
         st.info("""
         **Troubleshooting Tips:**
-        1. Make sure your model directory contains the correct files
-        2. If you trained with PyTorch, the model will auto-convert to TensorFlow
-        3. Check that the path is correct: `{}`
-        4. Ensure you have both TensorFlow and transformers installed
-        """.format(model_path))
+        - Make sure the model path is correct: `{}`
+        - Verify the model exists at: https://huggingface.co/{}
+        - Check that you have internet connection (first download)
+        - Ensure TensorFlow and transformers are installed
+        """.format(model_path, model_path))
         return None, None
 
 def generate_answer(
@@ -623,7 +629,8 @@ def main():
                 st.session_state.tokenizer = tokenizer
                 st.session_state.model_loaded = True
             else:
-                st.error("❌ Failed to load model. Please check that 't5_base_local' directory exists.")
+                st.error(f"❌ Failed to load model from: {model_path}")
+                st.info("Please check the Hugging Face Space logs for more details.")
                 st.stop()
     
     # Optimized generation parameters for speed and completeness
