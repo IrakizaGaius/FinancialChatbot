@@ -2,7 +2,7 @@
 
 import streamlit as st
 import tensorflow as tf
-from transformers import AutoTokenizer, TFT5ForConditionalGeneration
+from transformers import T5Tokenizer, TFT5ForConditionalGeneration
 import pandas as pd
 import time
 from datetime import datetime
@@ -296,33 +296,24 @@ def load_model_and_tokenizer(model_path):
         
         # Load tokenizer (will download from HF Hub if needed)
         st.info(f"Loading tokenizer from: {model_path}")
-        tokenizer = AutoTokenizer.from_pretrained(model_path)
+        tokenizer = T5Tokenizer.from_pretrained(model_path)
         
         # Try multiple loading strategies
-        st.info("Loading model... This may take a minute on first run.")
+        st.info("Loading model... This may take a minute.")
+        
         try:
-            # Try TensorFlow format first
-            model = TFT5ForConditionalGeneration.from_pretrained(
-                model_path,
-                from_pt=False
-            )
-        except Exception as e1:
-            st.warning("TensorFlow format not found, trying PyTorch conversion...")
-            try:
-                # Try converting from PyTorch
-                model = TFT5ForConditionalGeneration.from_pretrained(
-                    model_path,
-                    from_pt=True
-                )
-            except Exception as e2:
-                st.error(f"Failed to load model: {str(e2)}")
-                st.info("""
-                **Troubleshooting:**
-                - Model: `{}`
-                - Make sure the model repository exists and is public
-                - Check your internet connection for first-time download
-                """.format(model_path))
-                return None, None
+            # Load local model directly
+            st.info(f"Loading from local directory: {model_path}")
+            model = TFT5ForConditionalGeneration.from_pretrained(model_path)
+            st.success("✅ Model loaded successfully!")
+        except Exception as e:
+            st.error(f"Failed to load model: {str(e)}")
+            st.info("""
+            **Troubleshooting:**
+            - Make sure the T5_finetuned_model directory exists
+            - Check that it contains: config.json, tf_model.h5, and tokenizer files
+            """)
+            return None, None
         
         st.success(f"✅ Model loaded successfully from {model_path}")
         return model, tokenizer
@@ -622,7 +613,7 @@ def main():
     
     if not st.session_state.model_loaded:
         with st.spinner("🔄 Loading AI model... Please wait..."):
-            model_path = "GaiusIrakiza/financegpt-t5-model"
+            model_path = "T5_finetuned_model"  # Local model directory
             model, tokenizer = load_model_and_tokenizer(model_path)
             if model and tokenizer:
                 st.session_state.model = model
