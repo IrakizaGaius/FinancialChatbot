@@ -1,0 +1,49 @@
+# Streamlit Configuration File
+# =============================
+# Customize your app's appearance and behavior
+
+[theme]
+# Primary color (buttons, links)
+primaryColor = "#2196F3"
+
+# Background color
+backgroundColor = "#FFFFFF"
+
+# Secondary background color (sidebar, widgets)
+secondaryBackgroundColor = "#F5F5F5"
+
+# Text color
+textColor = "#262730"
+
+# Font family
+font = "sans serif"
+
+[server]
+# Server port (default: 8501)
+port = 8501
+
+# Enable CORS (for remote access)
+enableCORS = true
+
+# Enable XSRF protection
+enableXsrfProtection = true
+
+# Max upload size (MB)
+maxUploadSize = 200
+
+# Enable WebSocket compression
+enableWebsocketCompression = true
+
+[browser]
+# Automatically open browser on start
+gatherUsageStats = false
+
+# Server address to bind to
+serverAddress = "localhost"
+
+[runner]
+# Fast reruns for better UX
+fastReruns = true
+
+# Post-script auto-rerun on edit
+magicEnabled = true
