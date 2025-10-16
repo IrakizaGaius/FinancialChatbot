@@ -2,7 +2,7 @@
 
 import streamlit as st
 import tensorflow as tf
-from transformers import T5Tokenizer, TFT5ForConditionalGeneration
+from transformers import AutoTokenizer, TFT5ForConditionalGeneration
 import pandas as pd
 import time
 from datetime import datetime
@@ -296,7 +296,7 @@ def load_model_and_tokenizer(model_path):
         
         # Load tokenizer (will download from HF Hub if needed)
         st.info(f"Loading tokenizer from: {model_path}")
-        tokenizer = T5Tokenizer.from_pretrained(model_path)
+        tokenizer = AutoTokenizer.from_pretrained(model_path)
         
         # Try multiple loading strategies
         st.info("Loading model... This may take a minute on first run.")

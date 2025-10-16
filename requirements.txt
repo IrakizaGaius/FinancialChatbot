@@ -1,21 +1,25 @@
 # FinanceGPT - AI Financial Advisory Chatbot
-# Requirements File
+# Requirements File - Optimized for Hugging Face Spaces
 # Python 3.10+
 
 # Core Web Framework
 streamlit==1.50.0
 
-# Deep Learning Framework
+# Deep Learning Framework (Optimized versions)
 tensorflow==2.16.2
 tensorflow-io-gcs-filesystem==0.37.1
 tf-keras==2.16.0
+
+# PyTorch (needed for model conversion from PyTorch to TensorFlow)
+torch==2.2.2
+torchvision==0.17.2
 
 # Transformers and NLP
 transformers==4.57.0
 sentencepiece==0.2.1
 tokenizers==0.22.1
 
-# Data Processing
+# Data Processing (Minimal versions to save space)
 pandas==2.3.3
 numpy==1.26.4
 
@@ -29,14 +33,3 @@ huggingface-hub==0.35.3
 # Utilities
 python-dateutil==2.9.0.post0
 pytz==2025.2
-
-# Optional: For GPU support (uncomment if using GPU)
-# tensorflow-gpu==2.16.2
-
-# Optional: For model evaluation during training (uncomment if needed)
-# rouge-score==0.1.2
-# nltk==3.9.2
-
-# Optional: For data collection/scraping (uncomment if needed)
-# beautifulsoup4==4.14.2
-# requests==2.32.5
